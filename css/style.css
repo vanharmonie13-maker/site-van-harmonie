@@ -551,14 +551,29 @@ ul {
   z-index: -2;
 }
 
-/* Le voile sombre par-dessus la photo */
+/* Le voile sombre par-dessus la photo : deux dégradés superposés.
+   - le 1er assombrit la GAUCHE, là où se trouve le texte (la droite,
+     où l'on voit le van, reste claire) ;
+   - le 2e assombrit le BAS, derrière les boutons. */
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
   background:
+    linear-gradient(to right, rgba(20, 28, 26, 0.6) 0%, rgba(20, 28, 26, 0.3) 45%, rgba(20, 28, 26, 0) 75%),
     linear-gradient(to top, rgba(20, 28, 26, 0.92) 0%, rgba(20, 28, 26, 0.55) 45%, rgba(20, 28, 26, 0.25) 100%);
+}
+
+/* Ombre très douce sous le texte du bandeau : il reste lisible même
+   devant une zone claire de la photo (feuillage, ciel…). */
+.hero-contenu {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+}
+
+/* …mais pas sur les boutons, qui ont déjà leur propre fond */
+.hero-contenu .bouton {
+  text-shadow: none;
 }
 
 .hero-contenu {
