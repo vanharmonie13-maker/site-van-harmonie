@@ -90,8 +90,28 @@
              obligatoires avant l'envoi.
              action="#" : à remplacer par l'adresse du service d'envoi.
              ================================================================== -->
-        <form class="formulaire" id="formulaire-devis" action="#" method="post">
+        <!-- Le formulaire est envoyé au service Web3Forms (web3forms.com), qui
+             transmet chaque demande par email à van.harmonie13@gmail.com.
+             - action = l'adresse de Web3Forms qui reçoit le formulaire ;
+             - js/main.js (section 6) l'envoie sans quitter la page et affiche
+               un message de confirmation ou d'erreur ;
+             - si le JavaScript ne fonctionne pas, le formulaire est quand même
+               envoyé et Web3Forms affiche sa propre page de confirmation. -->
+        <form class="formulaire" id="formulaire-devis" action="https://api.web3forms.com/submit" method="post">
           <h2 class="visuellement-cache">Formulaire de demande de devis</h2>
+
+          <!-- Champs cachés lus par Web3Forms (invisibles pour le visiteur) :
+               access_key = votre clé Web3Forms (publique par nature : elle
+                            permet seulement d'envoyer des messages vers VOTRE
+                            boîte mail) ;
+               subject    = objet de l'email que vous recevez ;
+               from_name  = nom de l'expéditeur affiché dans votre boîte mail. -->
+          <input type="hidden" name="access_key" value="42cf8f8f-d655-439f-bc17-26bf6ca07db1">
+          <input type="hidden" name="subject" value="Nouvelle demande de devis — vanharmonie.fr">
+          <input type="hidden" name="from_name" value="Site Van Harmonie">
+          <!-- Piège à robots : case invisible pour les humains. Les robots
+               de spam la cochent souvent ; Web3Forms rejette alors l'envoi. -->
+          <input type="checkbox" name="botcheck" style="display: none;" tabindex="-1" autocomplete="off">
 
           <!-- RÉCAPITULATIF DES ERREURS : caché au départ (hidden). Si on clique
                sur « Envoyer » avec des champs mal remplis, js/main.js (section 6)

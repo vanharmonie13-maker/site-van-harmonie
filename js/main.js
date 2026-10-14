@@ -126,13 +126,10 @@ if (packDemande) {
      - PENDANT la frappe uniquement s'il est déjà en erreur, pour retirer le
        message dès que c'est bon.
 
-   Le formulaire n'est pas encore relié à une messagerie : quand tout est
-   correct, on affiche seulement un message de démonstration.
-
-   👉 Pour le brancher plus tard, la solution la plus simple est un service
-   comme Formspree ou Web3Forms (leur documentation explique comment envoyer
-   le formulaire depuis le JavaScript, à la place du message de
-   démonstration tout en bas de cette section).
+   Quand tout est correct, la demande est envoyée au service Web3Forms,
+   qui la transmet par email à van.harmonie13@gmail.com (voir la fonction
+   envoyerDemande() tout en bas de cette section). La clé Web3Forms est
+   dans un champ caché du formulaire, dans contact.html.
    -------------------------------------------------------------------------- */
 const formulaire = document.querySelector("#formulaire-devis");
 const messageEnvoi = document.querySelector("#message-envoi");
@@ -320,15 +317,68 @@ if (formulaire && messageEnvoi && resumeErreurs && listeErreurs) {
       return;
     }
 
-    // Tout est correct : message de démonstration
-    messageEnvoi.hidden = false;
-    messageEnvoi.textContent =
-      "Merci ! (Version de démonstration : le formulaire n'est pas encore " +
-      "relié à une messagerie, aucune donnée n'a été envoyée.)";
-
-    // Fait défiler la page jusqu'au message pour qu'il soit bien vu
-    messageEnvoi.scrollIntoView({ behavior: "smooth", block: "center" });
+    // Tout est correct : on envoie la demande
+    envoyerDemande();
   });
+
+  // Envoie la demande à Web3Forms sans quitter la page.
+  // « async » et « await » : on attend la réponse du serveur avant de
+  // continuer, sans bloquer la page pendant ce temps.
+  async function envoyerDemande() {
+    const bouton = formulaire.querySelector('button[type="submit"]');
+    const texteBouton = bouton.textContent;
+
+    // Pendant l'envoi : bouton désactivé (évite d'envoyer deux fois)
+    bouton.disabled = true;
+    bouton.textContent = "Envoi en cours…";
+    messageEnvoi.hidden = true;
+    messageEnvoi.classList.remove("message-envoi--erreur");
+
+    // On rassemble toutes les réponses du formulaire (champs cachés compris).
+    const donnees = Object.fromEntries(new FormData(formulaire));
+
+    // Les prestations cochées sont regroupées sur une seule ligne,
+    // avec leur nom lisible (ex. « Énergie Victron, Gaz & chauffage »).
+    const cochees = formulaire.querySelectorAll('input[name="prestations"]:checked');
+    donnees.prestations = Array.from(cochees)
+      .map(function (caseCochee) { return caseCochee.parentElement.textContent.trim(); })
+      .join(", ") || "Non précisé";
+    donnees.consentement = "oui";
+
+    // Dans Gmail, le bouton « Répondre » écrira directement au client
+    donnees.replyto = donnees.email;
+
+    try {
+      const reponse = await fetch(formulaire.action, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(donnees)
+      });
+      const resultat = await reponse.json();
+      if (!reponse.ok || !resultat.success) {
+        throw new Error(resultat.message || "Envoi refusé");
+      }
+
+      // Succès : on vide le formulaire et on remercie
+      formulaire.reset();
+      envoiTente = false;
+      messageEnvoi.textContent =
+        "Merci ! Votre demande est bien envoyée. Je reviens vers vous dès que possible.";
+    } catch (erreur) {
+      // Échec (pas de connexion, service indisponible…) : on le dit
+      // clairement et on donne un autre moyen de me contacter.
+      messageEnvoi.classList.add("message-envoi--erreur");
+      messageEnvoi.textContent =
+        "L'envoi n'a pas fonctionné. Vérifiez votre connexion et réessayez, " +
+        "ou contactez-moi directement : 06 25 00 02 81 – van.harmonie13@gmail.com.";
+    } finally {
+      // Dans tous les cas : on réactive le bouton et on montre le message
+      bouton.disabled = false;
+      bouton.textContent = texteBouton;
+      messageEnvoi.hidden = false;
+      messageEnvoi.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }
 }
 
 

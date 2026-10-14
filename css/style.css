@@ -1193,6 +1193,20 @@ fieldset.champ {
   color: var(--sapin);
 }
 
+/* Variante « erreur » du message (envoi qui a échoué) */
+.message-envoi--erreur {
+  background-color: var(--erreur-fond);
+  border-left-color: var(--erreur);
+  color: var(--erreur);
+}
+
+/* Bouton désactivé pendant l'envoi */
+.bouton:disabled {
+  opacity: 0.6;
+  cursor: wait;
+  transform: none;
+}
+
 /* Colonne d'informations à côté du formulaire */
 .infos {
   display: grid;
