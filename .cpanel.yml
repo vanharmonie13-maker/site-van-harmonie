@@ -1,0 +1,30 @@
+---
+# ============================================================================
+# .cpanel.yml — consignes de déploiement pour cPanel (o2switch)
+# ----------------------------------------------------------------------------
+# Quand vous cliquez sur « Déployer le commit HEAD » dans cPanel
+# (Git Version Control), cPanel exécute les lignes « tasks » ci-dessous,
+# dans l'ordre. Elles copient les fichiers du site depuis la copie du dépôt
+# GitHub vers le dossier du site vanharmonie.fr.
+#
+# Les fichiers qui ne servent pas au site (.gitignore, ce fichier…) ne sont
+# PAS copiés : seuls ceux listés ici le sont.
+#
+# ✏️ Si vous ajoutez une nouvelle page (ex. faq.html), ajoutez son nom sur
+#    la ligne des pages ci-dessous, sinon elle ne sera pas mise en ligne.
+#    (Les nouveaux fichiers dans css/, js/ et images/ sont copiés
+#    automatiquement.)
+# ============================================================================
+deployment:
+  tasks:
+    # Dossier du site : « Racine du document » de vanharmonie.fr dans cPanel.
+    # $HOME = votre dossier personnel o2switch (/home/votre-identifiant).
+    - export DEPLOYPATH="$HOME/vanharmonie.fr/"
+    # Sécurité : on s'arrête si ce dossier n'existe pas.
+    - test -d "$DEPLOYPATH"
+    # Les pages
+    - /bin/cp index.html packs.html realisations.html contact.html mentions-legales.html "$DEPLOYPATH"
+    # Réglages du serveur et icônes d'onglet
+    - /bin/cp .htaccess favicon.ico favicon.svg apple-touch-icon.png "$DEPLOYPATH"
+    # Les dossiers du style, des scripts et des images (avec leur contenu)
+    - /bin/cp -R css js images "$DEPLOYPATH"
