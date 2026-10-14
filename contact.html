@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  VAN HARMONIE — PAGE CONTACT / DEVIS (contact.html)
+  ----------------------------------------------------------------------------
+  Formulaire de demande de devis + bloc d'informations à côté.
+
+  ⚠️ Le formulaire n'est PAS encore branché : il n'envoie rien.
+     Le JavaScript (js/main.js, section 6) affiche juste un message.
+
+  Rappels sur les formulaires :
+  - Chaque champ a un <label> relié par for="..." = id="..." : cliquer sur
+    le libellé place le curseur dans le champ (pratique sur mobile).
+  - "required" = champ obligatoire, vérifié automatiquement par le navigateur.
+  - "name" = nom de la donnée envoyée le jour où le formulaire sera branché.
+  - type="email" / type="tel" affichent le bon clavier sur téléphone.
+  ============================================================================
+-->
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demande de devis — Van Harmonie</title>
+  <meta name="description" content="Demandez un devis pour l'aménagement de votre van ou fourgon : prestation modulaire, aménagement complet ou accompagnement VASP.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <a class="lien-evitement" href="#contenu">Aller au contenu</a>
+
+  <!-- ========== EN-TÊTE (identique sur les 4 pages, sauf aria-current) ========== -->
+  <header class="entete">
+    <div class="conteneur entete-interieur">
+      <a href="index.html" class="logo">
+        <span class="logo-pastille" aria-hidden="true">VH</span>
+        <span class="logo-texte">Van Harmonie <small>Atelier d'aménagement</small></span>
+      </a>
+
+      <!-- Bouton « Appeler » : visible sur mobile et tablette (caché sur ordinateur,
+           voir css/style.css section 5). Un toucher lance l'appel.
+           L'icône de téléphone est un petit dessin SVG (icône « phone » de Lucide). -->
+      <a href="tel:+33625000281" class="bouton-appel">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        <span class="bouton-appel-texte">Appeler</span>
+      </a>
+
+      <button class="menu-bouton" type="button" aria-expanded="false" aria-controls="menu-principal">
+        <span class="menu-barres"></span>
+        <span class="visuellement-cache">Ouvrir le menu</span>
+      </button>
+
+      <nav id="menu-principal" class="menu" aria-label="Menu principal">
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="packs.html">Packs</a></li>
+          <li><a href="realisations.html">Réalisations</a></li>
+          <li><a href="contact.html" class="bouton bouton--petit" aria-current="page">Demande de devis</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+
+  <main id="contenu">
+
+    <!-- ===================== EN-TÊTE DE PAGE ===================== -->
+    <section class="page-entete">
+      <div class="conteneur">
+        <span class="surtitre">Contact</span>
+        <h1>Demande de devis</h1>
+        <p>
+          Une prestation précise ou un aménagement complet&nbsp;: décrivez-nous
+          votre projet, nous revenons vers vous pour en discuter.
+        </p>
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="conteneur contact-grille">
+
+        <!-- ==================================================================
+             FORMULAIRE
+             novalidate n'est PAS mis : le navigateur vérifie les champs
+             obligatoires avant l'envoi.
+             action="#" : à remplacer par l'adresse du service d'envoi.
+             ================================================================== -->
+        <form class="formulaire" id="formulaire-devis" action="#" method="post">
+          <h2 class="visuellement-cache">Formulaire de demande de devis</h2>
+
+          <!-- RÉCAPITULATIF DES ERREURS : caché au départ (hidden). Si on clique
+               sur « Envoyer » avec des champs mal remplis, js/main.js (section 6)
+               le remplit avec un lien vers chaque champ à corriger, l'affiche
+               et y place le curseur. tabindex="-1" autorise ce placement. -->
+          <div class="erreurs-resume" id="erreurs-resume" tabindex="-1" hidden>
+            <h3>Il manque quelques informations</h3>
+            <p>Merci de corriger les points suivants&nbsp;:</p>
+            <ul id="erreurs-liste"></ul>
+          </div>
+
+          <p class="aide">Les champs marqués d'un * sont obligatoires.</p>
+
+          <!-- Nom + email côte à côte sur grand écran -->
+          <div class="champs-duo">
+            <div class="champ">
+              <label for="nom">Nom *</label>
+              <input type="text" id="nom" name="nom" autocomplete="name" required>
+              <p class="erreur-champ" id="erreur-nom" hidden></p>
+            </div>
+
+            <div class="champ">
+              <label for="email">Email *</label>
+              <input type="email" id="email" name="email" autocomplete="email" required>
+              <p class="erreur-champ" id="erreur-email" hidden></p>
+            </div>
+          </div>
+
+          <!-- Téléphone + localisation -->
+          <div class="champs-duo">
+            <div class="champ">
+              <label for="telephone">Téléphone <span class="facultatif">(facultatif)</span></label>
+              <!-- pattern = format accepté : 10 à 20 chiffres, espaces, points, tirets ou « + » -->
+              <input type="tel" id="telephone" name="telephone" autocomplete="tel" pattern="[0-9 +.\-]{10,20}">
+              <p class="erreur-champ" id="erreur-telephone" hidden></p>
+            </div>
+
+            <div class="champ">
+              <label for="localisation">Localisation *</label>
+              <input type="text" id="localisation" name="localisation" placeholder="Ville ou code postal" autocomplete="address-level2" required>
+              <p class="erreur-champ" id="erreur-localisation" hidden></p>
+            </div>
+          </div>
+
+          <!-- Véhicule -->
+          <div class="champ">
+            <label for="vehicule">Véhicule *</label>
+            <!-- aria-describedby relie le champ à son texte d'aide : les lecteurs
+                 d'écran le lisent en arrivant dans le champ -->
+            <input type="text" id="vehicule" name="vehicule" placeholder="Ex. : Renault Master L2H2, 2019" aria-describedby="aide-vehicule" required>
+            <span class="aide" id="aide-vehicule">Marque, modèle, taille et année si possible.</span>
+            <p class="erreur-champ" id="erreur-vehicule" hidden></p>
+          </div>
+
+          <!-- Prestations : cases à cocher (plusieurs choix possibles).
+               Les "value" energie / isolation / gaz / vasp / complet sont
+               utilisées par le JavaScript pour pré-cocher depuis la page Packs. -->
+          <fieldset class="champ">
+            <legend>Prestations souhaitées <span class="facultatif">(plusieurs choix possibles)</span></legend>
+            <div class="cases">
+              <label class="case"><input type="checkbox" name="prestations" value="energie"> Énergie Victron</label>
+              <label class="case"><input type="checkbox" name="prestations" value="isolation"> Isolation &amp; ouvertures</label>
+              <label class="case"><input type="checkbox" name="prestations" value="gaz"> Gaz &amp; chauffage</label>
+              <label class="case"><input type="checkbox" name="prestations" value="vasp"> Accompagnement VASP</label>
+              <label class="case"><input type="checkbox" name="prestations" value="menuiserie"> Mobilier / menuiserie</label>
+              <label class="case"><input type="checkbox" name="prestations" value="eau"> Circuit d'eau</label>
+              <label class="case"><input type="checkbox" name="prestations" value="complet"> Aménagement complet</label>
+              <label class="case"><input type="checkbox" name="prestations" value="autre"> Autre / je ne sais pas</label>
+            </div>
+          </fieldset>
+
+          <!-- Description libre du besoin -->
+          <div class="champ">
+            <label for="besoin">Votre besoin *</label>
+            <textarea id="besoin" name="besoin" placeholder="Décrivez votre projet, vos usages (week-ends, voyages longs, vie à l'année…) et ce qui existe déjà dans le véhicule." required></textarea>
+            <p class="erreur-champ" id="erreur-besoin" hidden></p>
+          </div>
+
+          <!-- Budget + échéance -->
+          <div class="champs-duo">
+            <div class="champ">
+              <label for="budget">Budget <span class="facultatif">(facultatif)</span></label>
+              <select id="budget" name="budget">
+                <option value="">— Choisir —</option>
+                <option>Moins de 2 000 €</option>
+                <option>2 000 à 5 000 €</option>
+                <option>5 000 à 15 000 €</option>
+                <option>15 000 à 30 000 €</option>
+                <option>Plus de 30 000 €</option>
+                <option>Je ne sais pas encore</option>
+              </select>
+            </div>
+
+            <div class="champ">
+              <label for="echeance">Échéance souhaitée *</label>
+              <select id="echeance" name="echeance" required>
+                <!-- value="" sur la 1re option : oblige à faire un vrai choix -->
+                <option value="">— Choisir —</option>
+                <option>Dès que possible</option>
+                <option>Dans 1 à 3 mois</option>
+                <option>Dans 3 à 6 mois</option>
+                <option>Dans plus de 6 mois</option>
+                <option>Pas de date précise</option>
+              </select>
+              <p class="erreur-champ" id="erreur-echeance" hidden></p>
+            </div>
+          </div>
+
+          <!-- Consentement (RGPD) : l'utilisateur accepte d'être recontacté -->
+          <div class="champ">
+            <label class="consentement">
+              <input type="checkbox" id="consentement" name="consentement" required>
+              <span>J'accepte que les informations saisies soient utilisées pour être recontacté(e) au sujet de ma demande. *</span>
+            </label>
+            <p class="erreur-champ" id="erreur-consentement" hidden></p>
+          </div>
+
+          <div>
+            <button type="submit" class="bouton">Envoyer ma demande</button>
+          </div>
+
+          <!-- Message affiché après l'envoi (caché au départ : attribut hidden).
+               role="status" : les lecteurs d'écran annoncent le message. -->
+          <p class="message-envoi" id="message-envoi" role="status" hidden></p>
+        </form>
+
+
+        <!-- ==================================================================
+             INFORMATIONS À CÔTÉ DU FORMULAIRE
+                   ================================================================== -->
+        <aside class="infos">
+          <div class="infos-bloc">
+            <h2>Nous joindre</h2>
+            <ul>
+              <li>Téléphone&nbsp;: <a href="tel:+33625000281">06 25 00 02 81</a></li>
+              <li>Email&nbsp;: <a href="mailto:van.harmonie13@gmail.com">van.harmonie13@gmail.com</a></li>
+            </ul>
+          </div>
+
+          <div class="infos-bloc">
+            <h2>Où sommes-nous&nbsp;?</h2>
+            <p>
+              Atelier à Pélissanne (13), près de Salon-de-Provence.
+              Interventions sur votre véhicule, en PACA et partout en France.
+            </p>
+          </div>
+
+          <div class="infos-bloc">
+            <h2>Et ensuite&nbsp;?</h2>
+            <p>
+              Nous étudions votre demande puis nous vous recontactons pour
+              préciser votre projet avant de vous adresser un devis.
+            </p>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ========== PIED DE PAGE (identique sur les 4 pages) ========== -->
+  <footer class="pied">
+    <div class="conteneur">
+      <div class="pied-grille">
+        <div>
+          <a href="index.html" class="logo">
+            <span class="logo-pastille" aria-hidden="true">VH</span>
+            <span class="logo-texte">Van Harmonie <small>Atelier d'aménagement</small></span>
+          </a>
+          <p>Aménagement de vans et fourgons, prestations modulaires et sur-mesure.</p>
+        </div>
+
+        <div>
+          <h2>L'atelier</h2>
+          <ul>
+            <li>Pélissanne (13330)</li>
+            <li>Près de Salon-de-Provence</li>
+            <li>Interventions en PACA et partout en France</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2>Contact</h2>
+          <ul>
+            <li><a href="tel:+33625000281">06 25 00 02 81</a></li>
+            <li><a href="mailto:van.harmonie13@gmail.com">van.harmonie13@gmail.com</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2>Navigation</h2>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="packs.html">Packs</a></li>
+            <li><a href="realisations.html">Réalisations</a></li>
+            <li><a href="contact.html">Demande de devis</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="pied-bas">© <span class="annee">2026</span> Van Harmonie — Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+
+  <!-- Bibliothèque d'animation Motion (motion.dev), version 13.4.6, chargée
+       depuis le CDN jsDelivr. "defer" = téléchargée sans bloquer l'affichage,
+       puis exécutée dans l'ordre, une fois la page lue.
+       "integrity" = empreinte du fichier : si le fichier reçu était modifié,
+       le navigateur refuserait de l'exécuter (sécurité). Si vous changez de
+       version, il faut changer l'empreinte aussi (ou retirer cet attribut). -->
+  <script defer src="https://cdn.jsdelivr.net/npm/motion@13.4.6/dist/motion.js"
+          integrity="sha384-r/e4U+dyOcWBX2/DXrTeaB1R9i9FhnrrxlcxehiAjy3Z1fa8134rTLsgfThF9tYQ"
+          crossorigin="anonymous"></script>
+  <!-- Nos animations (doit venir APRÈS Motion, car il l'utilise) -->
+  <script defer src="js/animations.js"></script>
+</body>
+</html>

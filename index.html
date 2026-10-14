@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  VAN HARMONIE — PAGE D'ACCUEIL (index.html)
+  ----------------------------------------------------------------------------
+  C'est la première page que voient les visiteurs. Un hébergeur web ouvre
+  automatiquement le fichier nommé "index.html" : gardez donc ce nom.
+
+  Structure de toute page HTML :
+    <head>  = informations invisibles (titre de l'onglet, styles, polices…)
+    <body>  = tout ce qui s'affiche à l'écran
+  ============================================================================
+-->
+<html lang="fr">
+<head>
+  <!-- Encodage des caractères : permet d'afficher les accents correctement -->
+  <meta charset="UTF-8">
+
+  <!-- Indispensable pour un affichage correct sur téléphone -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Titre affiché dans l'onglet du navigateur et dans les résultats Google -->
+  <title>Van Harmonie — Atelier d'aménagement de vans à Pélissanne (13)</title>
+
+  <!-- Courte description reprise par Google sous le titre (≈ 150 caractères) -->
+  <meta name="description" content="Atelier d'aménagement de vans et fourgons à Pélissanne, près de Salon-de-Provence. Prestations modulaires ou aménagement complet, en PACA et partout en France.">
+
+  <!-- Polices d'écriture (Google Fonts) : Fraunces pour les titres,
+       Source Sans 3 pour le texte -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Notre feuille de style (toute l'apparence du site) -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- Lien invisible qui apparaît au clavier : permet de sauter le menu -->
+  <a class="lien-evitement" href="#contenu">Aller au contenu</a>
+
+  <!-- ========================================================================
+       EN-TÊTE (logo + menu)
+       ⚠️ Ce bloc est copié à l'identique dans les 4 pages. Si vous ajoutez
+       un lien au menu, pensez à le faire dans chaque fichier .html.
+       L'attribut aria-current="page" indique la page en cours (en couleur).
+       ======================================================================== -->
+  <header class="entete">
+    <div class="conteneur entete-interieur">
+      <a href="index.html" class="logo">
+        <span class="logo-pastille" aria-hidden="true">VH</span>
+        <span class="logo-texte">Van Harmonie <small>Atelier d'aménagement</small></span>
+      </a>
+
+      <!-- Bouton « Appeler » : visible sur mobile et tablette (caché sur ordinateur,
+           voir css/style.css section 5). Un toucher lance l'appel.
+           L'icône de téléphone est un petit dessin SVG (icône « phone » de Lucide). -->
+      <a href="tel:+33625000281" class="bouton-appel">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        <span class="bouton-appel-texte">Appeler</span>
+      </a>
+
+      <!-- Bouton « burger » : visible seulement sur mobile (voir js/main.js) -->
+      <button class="menu-bouton" type="button" aria-expanded="false" aria-controls="menu-principal">
+        <span class="menu-barres"></span>
+        <span class="visuellement-cache">Ouvrir le menu</span>
+      </button>
+
+      <nav id="menu-principal" class="menu" aria-label="Menu principal">
+        <ul>
+          <li><a href="index.html" aria-current="page">Accueil</a></li>
+          <li><a href="packs.html">Packs</a></li>
+          <li><a href="realisations.html">Réalisations</a></li>
+          <li><a href="contact.html" class="bouton bouton--petit">Demande de devis</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+
+  <!-- Tout le contenu principal de la page est dans <main> -->
+  <main id="contenu">
+
+    <!-- ======================================================================
+         1. GRAND BANDEAU PHOTO (« hero »)
+         Pour changer la photo : remplacez le fichier images/hero.jpg par la
+         vôtre, en gardant le même nom (format paysage, ≈ 1920 × 1080 px).
+         Le texte "alt" décrit l'image pour les malvoyants et Google.
+         ====================================================================== -->
+    <section class="hero">
+      <img class="hero-image" src="images/hero.jpg" alt="Citroën Jumper aménagé, porte latérale ouverte, garé sous les pins">
+
+      <div class="conteneur">
+        <div class="hero-contenu">
+          <p class="surtitre">Pélissanne (13) · près de Salon-de-Provence</p>
+
+          <h1>Atelier d'aménagement de vans <span>&amp; prestations modulaires</span></h1>
+
+          <p class="hero-texte">
+            Une batterie lithium, une fenêtre, un chauffage… ou l'aménagement
+            complet de votre fourgon. Vous choisissez ce dont votre van a
+            besoin&nbsp;: nous intervenons sur votre véhicule, en PACA et
+            partout en France.
+          </p>
+
+          <div class="boutons">
+            <a href="contact.html" class="bouton">Demande de devis</a>
+            <a href="packs.html" class="bouton bouton--clair">Découvrir nos packs</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================================================================
+         2. BANDEAU DES ATOUTS
+         Trois messages courts pour comprendre l'atelier en 5 secondes.
+         ====================================================================== -->
+    <section class="atouts" aria-label="Nos atouts">
+      <div class="conteneur">
+        <ul class="atouts-liste">
+          <li>
+            <strong>À la carte ou complet</strong>
+            <span>Une seule prestation ou l'aménagement de A à Z&nbsp;: c'est vous qui décidez.</span>
+          </li>
+          <li>
+            <strong>Sur votre véhicule</strong>
+            <span>Nous aménageons le van ou le fourgon que vous possédez déjà.</span>
+          </li>
+          <li>
+            <strong>PACA et toute la France</strong>
+            <span>Atelier à Pélissanne, interventions en PACA et partout en France.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- ======================================================================
+         3. LES 3 OFFRES
+         Chaque offre est une « carte » (<article class="carte">).
+         Pour en ajouter une : copiez un bloc <article>…</article> entier.
+         ====================================================================== -->
+    <section class="section">
+      <div class="conteneur">
+        <div class="section-entete">
+          <span class="surtitre">Nos offres</span>
+          <div class="planche"></div>
+          <h2>Un seul besoin ou tout un projet</h2>
+          <p>
+            Pas besoin de tout refaire pour faire appel à nous. Nous réalisons
+            aussi bien une prestation précise qu'un aménagement complet.
+          </p>
+        </div>
+
+        <div class="grille">
+          <!-- Offre 1 -->
+          <article class="carte">
+            <img src="images/offre-modulaire.jpg" alt="Installation électrique dans un van" loading="lazy">
+            <div class="carte-contenu">
+              <h3>Prestations modulaires</h3>
+              <p>
+                Vous avez déjà un van aménagé ou vous avancez étape par
+                étape&nbsp;? Nous réalisons la prestation dont vous avez
+                besoin&nbsp;: énergie, isolation, fenêtres, gaz, chauffage…
+              </p>
+              <a href="packs.html" class="lien-fleche">Voir les packs</a>
+            </div>
+          </article>
+
+          <!-- Offre 2 -->
+          <article class="carte">
+            <img src="images/offre-sur-mesure.jpg" alt="Cuisine sur-mesure : plan de travail en bois, évier noir et carrelage hexagonal" loading="lazy">
+            <div class="carte-contenu">
+              <h3>Aménagement sur-mesure</h3>
+              <p>
+                Un projet complet, pensé avec vous&nbsp;: implantation,
+                mobilier bois, électricité, eau, couchage. Votre fourgon
+                devient votre maison roulante.
+              </p>
+              <a href="contact.html" class="lien-fleche">Parler de mon projet</a>
+            </div>
+          </article>
+
+          <!-- Offre 3 -->
+          <article class="carte">
+            <img src="images/offre-vasp.jpg" alt="Fourgon aménagé prêt pour la route" loading="lazy">
+            <div class="carte-contenu">
+              <h3>Accompagnement VASP</h3>
+              <p>
+                Vous souhaitez passer votre véhicule en VASP
+                autocaravane&nbsp;? Nous vous aidons à préparer le dossier
+                et les aménagements nécessaires.
+              </p>
+              <!-- "#vasp" fait défiler directement jusqu'au pack VASP -->
+              <a href="packs.html#vasp" class="lien-fleche">Voir le pack VASP</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================================================================
+         4. COMMENT ÇA SE PASSE
+         Les numéros 01, 02, 03, 04 sont ajoutés automatiquement par le CSS.
+         ====================================================================== -->
+    <section class="section section--creme">
+      <div class="conteneur">
+        <div class="section-entete">
+          <span class="surtitre">Comment ça se passe</span>
+          <div class="planche"></div>
+          <h2>De votre idée à la route</h2>
+        </div>
+
+        <ol class="etapes">
+          <li>
+            <h3>Votre demande</h3>
+            <p>Vous décrivez votre véhicule et votre besoin via le formulaire de devis.</p>
+          </li>
+          <li>
+            <h3>L'échange</h3>
+            <p>Nous faisons le point ensemble sur vos usages, vos priorités et votre budget.</p>
+          </li>
+          <li>
+            <h3>Le devis</h3>
+            <p>Vous recevez une proposition détaillée, prestation par prestation.</p>
+          </li>
+          <li>
+            <h3>Les travaux</h3>
+            <p>Nous intervenons sur votre véhicule à la date convenue, puis vous reprenez la route.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+
+    <!-- ======================================================================
+         5. L'ATELIER (photo + texte)
+         ✏️ Racontez ici votre histoire avec vos propres mots.
+         ====================================================================== -->
+    <section class="section">
+      <div class="conteneur duo">
+        <img src="images/atelier.jpg" alt="Meubles en bois en cours de fabrication dans un fourgon" loading="lazy">
+        <div>
+          <span class="surtitre">L'atelier</span>
+          <div class="planche"></div>
+          <h2>Un atelier, l'esprit du bois et de la route</h2>
+          <p>
+            Installé à Pélissanne, près de Salon-de-Provence, Van Harmonie
+            aménage vans et fourgons avec une attention particulière portée
+            aux finitions bois, à la fiabilité des installations et au
+            confort du quotidien à bord.
+          </p>
+          <p>
+            Chaque véhicule est différent, chaque voyageur aussi&nbsp;: nous
+            prenons le temps de comprendre votre façon de voyager avant de
+            vous proposer une solution.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================================================================
+         6. APERÇU DES RÉALISATIONS
+         Ici, toute la carte est un lien (<a class="carte carte-lien">).
+         Les photos sont les « après » des réalisations de la galerie.
+         ====================================================================== -->
+    <section class="section section--creme">
+      <div class="conteneur">
+        <div class="section-entete">
+          <span class="surtitre">Réalisations</span>
+          <div class="planche"></div>
+          <h2>Quelques projets récents</h2>
+          <p>Du fourgon vide au van prêt à partir.</p>
+        </div>
+
+        <!-- Vos vraies réalisations (les mêmes que sur la page Réalisations) -->
+        <div class="grille">
+          <a href="realisations.html" class="carte carte-lien">
+            <img src="images/jumper-apres.jpg" alt="Citroën Jumper aménagé : lit, rangements et portes habillées de bois" loading="lazy">
+            <div class="carte-contenu">
+              <span class="etiquette etiquette--complet">Complet</span>
+              <h3>Citroën Jumper : aménagement complet</h3>
+            </div>
+          </a>
+
+          <a href="realisations.html" class="carte carte-lien">
+            <img src="images/t6-apres.jpg" alt="Volkswagen T6 aménagé : lit sur coffres et plafond en lames de bois" loading="lazy">
+            <div class="carte-contenu">
+              <span class="etiquette etiquette--complet">Complet</span>
+              <h3>Volkswagen T6 : aménagement bois</h3>
+            </div>
+          </a>
+
+          <a href="realisations.html" class="carte carte-lien">
+            <img src="images/master.jpg" alt="Renault Master, le premier van aménagé" loading="lazy">
+            <div class="carte-contenu">
+              <span class="etiquette etiquette--complet">Mon premier van</span>
+              <h3>Renault Master : là où tout a commencé</h3>
+            </div>
+          </a>
+        </div>
+
+        <div class="section-pied">
+          <a href="realisations.html" class="bouton bouton--contour">Voir toutes les réalisations</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================================================================
+         7. APPEL À L'ACTION (bandeau final)
+         ====================================================================== -->
+    <section class="appel">
+      <div class="conteneur">
+        <h2>Un projet, petit ou grand&nbsp;?</h2>
+        <p>
+          Décrivez-nous votre véhicule et votre besoin&nbsp;: nous revenons
+          vers vous avec une proposition adaptée.
+        </p>
+        <div class="boutons">
+          <a href="contact.html" class="bouton">Demande de devis</a>
+          <a href="packs.html" class="bouton bouton--clair">Découvrir nos packs</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ========================================================================
+       PIED DE PAGE
+       ⚠️ Copié à l'identique dans les 4 pages.
+       ======================================================================== -->
+  <footer class="pied">
+    <div class="conteneur">
+      <div class="pied-grille">
+        <div>
+          <a href="index.html" class="logo">
+            <span class="logo-pastille" aria-hidden="true">VH</span>
+            <span class="logo-texte">Van Harmonie <small>Atelier d'aménagement</small></span>
+          </a>
+          <p>Aménagement de vans et fourgons, prestations modulaires et sur-mesure.</p>
+        </div>
+
+        <div>
+          <h2>L'atelier</h2>
+          <ul>
+            <li>Pélissanne (13330)</li>
+            <li>Près de Salon-de-Provence</li>
+            <li>Interventions en PACA et partout en France</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2>Contact</h2>
+          <ul>
+            <!-- "tel:" permet d'appeler d'un simple toucher sur mobile -->
+            <li><a href="tel:+33625000281">06 25 00 02 81</a></li>
+            <li><a href="mailto:van.harmonie13@gmail.com">van.harmonie13@gmail.com</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2>Navigation</h2>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="packs.html">Packs</a></li>
+            <li><a href="realisations.html">Réalisations</a></li>
+            <li><a href="contact.html">Demande de devis</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- L'année est mise à jour automatiquement par js/main.js -->
+      <p class="pied-bas">© <span class="annee">2026</span> Van Harmonie — Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <!-- Le JavaScript est chargé à la fin : la page s'affiche d'abord, plus vite -->
+  <script src="js/main.js"></script>
+
+  <!-- Bibliothèque d'animation Motion (motion.dev), version 13.4.6, chargée
+       depuis le CDN jsDelivr. "defer" = téléchargée sans bloquer l'affichage,
+       puis exécutée dans l'ordre, une fois la page lue.
+       "integrity" = empreinte du fichier : si le fichier reçu était modifié,
+       le navigateur refuserait de l'exécuter (sécurité). Si vous changez de
+       version, il faut changer l'empreinte aussi (ou retirer cet attribut). -->
+  <script defer src="https://cdn.jsdelivr.net/npm/motion@13.4.6/dist/motion.js"
+          integrity="sha384-r/e4U+dyOcWBX2/DXrTeaB1R9i9FhnrrxlcxehiAjy3Z1fa8134rTLsgfThF9tYQ"
+          crossorigin="anonymous"></script>
+  <!-- Nos animations (doit venir APRÈS Motion, car il l'utilise) -->
+  <script defer src="js/animations.js"></script>
+</body>
+</html>

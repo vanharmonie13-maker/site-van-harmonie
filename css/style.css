@@ -1,0 +1,1399 @@
+/* ==========================================================================
+   VAN HARMONIE — Feuille de style principale
+   --------------------------------------------------------------------------
+   Ce fichier gère TOUTE l'apparence du site (couleurs, tailles, mise en page).
+   Les 4 pages HTML l'utilisent grâce à la ligne :
+   <link rel="stylesheet" href="css/style.css">
+
+   Le fichier est découpé en sections numérotées :
+     1.  Variables (couleurs, polices, espacements)  ← à modifier en premier
+     2.  Remise à zéro et réglages de base
+     3.  Outils de mise en page (conteneur, sections, titres)
+     4.  Boutons
+     5.  En-tête et menu
+     6.  Bandeau d'accueil (hero)
+     7.  Bandeau des atouts
+     8.  Cartes (offres, packs, réalisations)
+     9.  Étapes « Comment ça se passe »
+     10. Section atelier (image + texte)
+     11. En-tête des pages intérieures
+     12. Packs
+     13. Réalisations : filtres et comparateur avant/après
+     14. Formulaire de contact
+     15. Bandeau d'appel à l'action
+     16. Pied de page
+     17. Adaptations pour les grands écrans
+
+   Principe « mobile d'abord » : les styles de base sont prévus pour le
+   téléphone. Les blocs @media (min-width: ...) ajoutent ensuite des réglages
+   pour les écrans plus larges (tablette, ordinateur).
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. VARIABLES
+   Une variable CSS s'écrit --nom: valeur; et s'utilise avec var(--nom).
+   Changer une couleur ici la change partout sur le site.
+   ========================================================================== */
+:root {
+  /* Couleurs « atelier bois » */
+  --bois: #9c5a2a;          /* brun caramel : boutons, liens importants */
+  --bois-fonce: #7a431c;    /* version foncée : survol des boutons */
+  --bois-clair: #c98a52;    /* touches décoratives */
+  --soleil: #e3a33b;        /* ocre provençal : petits accents */
+
+  /* Couleurs « route » */
+  --sapin: #1f2b28;         /* vert très sombre : en-tête, pied de page */
+  --sapin-clair: #34463f;
+
+  /* Fonds et textes */
+  --sable: #f7f1e8;         /* fond général, beige chaud */
+  --creme: #fffbf5;         /* fond des cartes */
+  --ligne: #e6dccd;         /* bordures fines */
+  --texte: #2a2622;         /* texte principal */
+  --texte-doux: #5e5650;    /* texte secondaire */
+  --blanc: #ffffff;
+
+  /* Couleurs des erreurs du formulaire (rouge brique, assez foncé pour
+     rester bien lisible sur fond clair) */
+  --erreur: #b42318;
+  --erreur-fond: #fdf1ef;
+
+  /* Polices (chargées depuis Google Fonts dans le <head> de chaque page) */
+  --police-titre: "Fraunces", Georgia, serif;
+  --police-texte: "Source Sans 3", "Segoe UI", Arial, sans-serif;
+
+  /* Arrondis, ombres, largeur maximale du contenu */
+  --arrondi: 14px;
+  --arrondi-petit: 8px;
+  --ombre: 0 10px 30px rgba(42, 38, 34, 0.08);
+  --largeur-max: 1180px;
+}
+
+
+/* ==========================================================================
+   2. REMISE À ZÉRO ET RÉGLAGES DE BASE
+   Les navigateurs ajoutent des marges par défaut : on les neutralise pour
+   partir sur une base propre et identique partout.
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* la largeur d'un bloc inclut ses bordures et marges intérieures */
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth; /* défilement doux quand on clique sur un lien interne (#ancre) */
+
+  /* L'en-tête reste collé en haut de l'écran (68 px de haut). Sans cette
+     ligne, un lien comme packs.html#vasp, ou la navigation au clavier,
+     ferait arriver l'élément visé SOUS l'en-tête, donc caché.
+     On demande au navigateur de garder 90 px de marge en haut. */
+  scroll-padding-top: 90px;
+}
+
+body {
+  font-family: var(--police-texte);
+  font-size: 1.0625rem;   /* ≈ 17 px : confortable sur mobile */
+  line-height: 1.65;
+  color: var(--texte);
+  background-color: var(--sable);
+}
+
+img {
+  display: block;
+  max-width: 100%;  /* une image ne déborde jamais de son bloc */
+  height: auto;
+}
+
+a {
+  color: var(--bois);
+}
+
+h1, h2, h3 {
+  font-family: var(--police-titre);
+  line-height: 1.15;
+  font-weight: 650;
+  color: var(--sapin);
+}
+
+ul {
+  padding-left: 1.2em;
+}
+
+/* L'attribut HTML "hidden" doit toujours cacher l'élément (utilisé par le JS) */
+[hidden] {
+  display: none !important;
+}
+
+/* Contour bien visible quand on navigue au clavier (touche Tab) */
+:focus-visible {
+  outline: 3px solid var(--soleil);
+  outline-offset: 3px;
+}
+
+/* Texte lu par les lecteurs d'écran mais invisible à l'écran */
+.visuellement-cache {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Lien « Aller au contenu » : apparaît seulement au clavier */
+.lien-evitement {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--soleil);
+  color: var(--sapin);
+  font-weight: 700;
+  border-radius: var(--arrondi-petit);
+}
+
+.lien-evitement:focus {
+  top: 1rem;
+}
+
+
+/* ==========================================================================
+   3. OUTILS DE MISE EN PAGE
+   ========================================================================== */
+
+/* Le conteneur centre le contenu et limite sa largeur sur grand écran.
+   Les 16 px de chaque côté évitent que le texte colle au bord du téléphone. */
+.conteneur {
+  width: 100%;
+  max-width: var(--largeur-max);
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+/* Espacement vertical commun à toutes les grandes sections */
+.section {
+  padding-block: 4rem;
+}
+
+/* Variante avec un fond légèrement différent, pour alterner les sections */
+.section--creme {
+  background-color: var(--creme);
+  border-block: 1px solid var(--ligne);
+}
+
+/* Petit texte au-dessus des titres (ex. « Nos offres ») */
+.surtitre {
+  display: inline-block;
+  margin-bottom: 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bois);
+}
+
+/* Bloc titre + introduction en haut d'une section */
+.section-entete {
+  max-width: 680px;
+  margin-bottom: 2.5rem;
+}
+
+.section-entete h2 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem); /* clamp(min, idéal, max) : taille fluide */
+  margin-bottom: 0.8rem;
+}
+
+.section-entete p {
+  color: var(--texte-doux);
+  font-size: 1.1rem;
+}
+
+/* Petite frise « planche de bois » sous certains titres */
+.planche {
+  width: 72px;
+  height: 6px;
+  margin-bottom: 1.2rem;
+  border-radius: 3px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--bois) 0 22px,
+    var(--bois-clair) 22px 24px
+  );
+}
+
+/* Grille automatique : autant de colonnes que la largeur le permet,
+   chaque colonne faisant au moins 280 px. Sur mobile : 1 seule colonne. */
+.grille {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+}
+
+/* Variante « 2 par ligne » pour les listes de 4 éléments (packs, réalisations).
+   Avec la grille automatique, 4 cartes donnaient 3 + 1 carte seule en dessous.
+   Ici : 1 colonne sur téléphone, puis toujours 2 colonnes (donc 2 + 2). */
+@media (min-width: 700px) {
+  .grille--2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* ==========================================================================
+   4. BOUTONS
+   Classe de base .bouton + variantes (--clair, --contour, --petit).
+   ========================================================================== */
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;              /* zone tactile confortable sur mobile */
+  padding: 0.75rem 1.5rem;
+  border: 2px solid var(--bois);
+  border-radius: 999px;          /* bords entièrement arrondis */
+  background-color: var(--bois);
+  color: var(--blanc);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+}
+
+.bouton:hover {
+  background-color: var(--bois-fonce);
+  border-color: var(--bois-fonce);
+  transform: translateY(-2px);   /* léger soulèvement au survol */
+}
+
+/* Bouton transparent à bord blanc (utilisé sur la photo d'accueil) */
+.bouton--clair {
+  background-color: transparent;
+  border-color: var(--blanc);
+  color: var(--blanc);
+}
+
+.bouton--clair:hover {
+  background-color: var(--blanc);
+  border-color: var(--blanc);
+  color: var(--sapin);
+}
+
+/* Bouton à bord brun sur fond clair */
+.bouton--contour {
+  background-color: transparent;
+  color: var(--bois);
+}
+
+.bouton--contour:hover {
+  color: var(--blanc);
+}
+
+.bouton--petit {
+  min-height: 42px;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.95rem;
+}
+
+/* Lien texte avec flèche (« Voir les packs → ») */
+.lien-fleche {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.lien-fleche::after {
+  content: " →";
+  transition: margin-left 0.2s;
+}
+
+.lien-fleche:hover::after {
+  margin-left: 4px;
+}
+
+
+/* ==========================================================================
+   5. EN-TÊTE ET MENU
+   Sur mobile : logo + bouton « burger » qui ouvre/ferme le menu (géré par
+   le JavaScript). Sur grand écran : le menu est toujours visible.
+   ========================================================================== */
+.entete {
+  position: sticky;   /* l'en-tête reste collé en haut pendant le défilement */
+  top: 0;
+  z-index: 50;
+  background-color: var(--sapin);
+  color: var(--blanc);
+}
+
+.entete-interieur {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 68px;
+}
+
+/* Logo : pastille « VH » + nom */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--blanc);
+  text-decoration: none;
+}
+
+.logo-pastille {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--bois-clair), var(--bois));
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.logo-texte {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--police-titre);
+  font-size: 1.25rem;
+  font-weight: 650;
+  line-height: 1.1;
+}
+
+.logo-texte small {
+  font-family: var(--police-texte);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bois-clair);
+}
+
+/* Bouton « Appeler » — visible sur mobile et tablette, à côté du burger.
+   margin-left: auto le pousse vers la droite, contre le burger. */
+.bouton-appel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-width: 44px;            /* zone tactile d'au moins 44 × 44 px */
+  min-height: 44px;
+  margin-left: auto;
+  margin-right: 0.5rem;
+  padding: 0 0.9rem;
+  border: 2px solid var(--bois-clair);
+  border-radius: 999px;
+  color: var(--blanc);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.bouton-appel:hover {
+  background-color: var(--bois);
+  border-color: var(--bois);
+}
+
+/* L'icône de téléphone (dessin SVG écrit directement dans le HTML) */
+.bouton-appel svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* Sur les petits téléphones (moins de 480 px), il n'y a pas la place pour
+   le mot « Appeler » : on n'affiche que l'icône, dans un rond.
+   Le mot reste lu par les lecteurs d'écran (même technique que
+   .visuellement-cache, section 2). */
+@media (max-width: 479px) {
+  .bouton-appel {
+    width: 44px;
+    padding: 0;
+  }
+
+  .bouton-appel-texte {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+/* Bouton burger (3 barres) — visible uniquement sur mobile */
+.menu-bouton {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: var(--arrondi-petit);
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Les 3 barres sont dessinées avec un élément + ses pseudo-éléments */
+.menu-barres,
+.menu-barres::before,
+.menu-barres::after {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--blanc);
+  border-radius: 2px;
+  transition: transform 0.25s, opacity 0.25s;
+}
+
+.menu-barres {
+  position: relative;
+}
+
+.menu-barres::before,
+.menu-barres::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+
+.menu-barres::before { top: -7px; }
+.menu-barres::after  { top: 7px; }
+
+/* Quand le menu est ouvert, les barres forment une croix */
+.menu-bouton[aria-expanded="true"] .menu-barres { background-color: transparent; }
+.menu-bouton[aria-expanded="true"] .menu-barres::before { transform: translateY(7px) rotate(45deg); }
+.menu-bouton[aria-expanded="true"] .menu-barres::after  { transform: translateY(-7px) rotate(-45deg); }
+
+/* Le menu sur mobile : caché par défaut, s'affiche sous l'en-tête */
+.menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding: 1rem 16px 1.5rem;
+  background-color: var(--sapin);
+  border-top: 1px solid var(--sapin-clair);
+}
+
+/* La classe "ouvert" est ajoutée par le JavaScript au clic sur le burger */
+.menu.ouvert {
+  display: block;
+}
+
+.menu ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0;
+  list-style: none;
+}
+
+.menu a:not(.bouton) {
+  display: block;
+  padding: 0.75rem 0.5rem;
+  color: var(--blanc);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--arrondi-petit);
+}
+
+.menu a:not(.bouton):hover {
+  color: var(--soleil);
+}
+
+/* Page en cours : aria-current="page" est écrit dans le HTML de chaque page */
+.menu a:not(.bouton)[aria-current="page"] {
+  color: var(--soleil);
+}
+
+.menu .bouton {
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+
+/* ==========================================================================
+   6. BANDEAU D'ACCUEIL (HERO)
+   Une grande photo en fond + un dégradé sombre pour que le texte blanc
+   reste lisible, quelle que soit la photo choisie.
+   ========================================================================== */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 82vh;
+  min-height: 82svh; /* "svh" tient compte de la barre d'adresse sur mobile */
+  padding-block: 6rem 3.5rem;
+  color: var(--blanc);
+  overflow: hidden;
+  isolation: isolate; /* garde la photo et le voile « derrière » le texte, dans le bandeau */
+}
+
+/* La photo occupe tout le bandeau, recadrée automatiquement (object-fit) */
+.hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+/* Le voile sombre par-dessus la photo */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(to top, rgba(20, 28, 26, 0.92) 0%, rgba(20, 28, 26, 0.55) 45%, rgba(20, 28, 26, 0.25) 100%);
+}
+
+.hero-contenu {
+  max-width: 760px;
+}
+
+.hero .surtitre {
+  color: var(--soleil);
+}
+
+.hero h1 {
+  margin-bottom: 1.2rem;
+  font-size: clamp(2.2rem, 7vw, 4rem);
+  color: var(--blanc);
+}
+
+/* La 2e partie du titre en couleur ocre */
+.hero h1 span {
+  display: block;
+  color: var(--soleil);
+}
+
+.hero-texte {
+  max-width: 600px;
+  margin-bottom: 2rem;
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Groupe de boutons : passe à la ligne si pas assez de place */
+.boutons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+
+/* ==========================================================================
+   7. BANDEAU DES ATOUTS (sous le hero)
+   ========================================================================== */
+.atouts {
+  background-color: var(--sapin);
+  color: var(--blanc);
+  padding-block: 2rem;
+}
+
+.atouts-liste {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  padding: 0;
+  list-style: none;
+}
+
+.atouts-liste li {
+  padding-left: 1rem;
+  border-left: 3px solid var(--bois-clair);
+}
+
+.atouts-liste strong {
+  display: block;
+  font-family: var(--police-titre);
+  font-size: 1.15rem;
+  color: var(--soleil);
+}
+
+.atouts-liste span {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.98rem;
+}
+
+
+/* ==========================================================================
+   8. CARTES
+   Une carte = image en haut + contenu en dessous. Utilisée pour les offres,
+   les packs et l'aperçu des réalisations.
+   ========================================================================== */
+.carte {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--creme);
+  border: 1px solid var(--ligne);
+  border-radius: var(--arrondi);
+  box-shadow: var(--ombre);
+}
+
+.carte img {
+  width: 100%;
+  aspect-ratio: 3 / 2;   /* toutes les images ont les mêmes proportions */
+  object-fit: cover;
+}
+
+.carte-contenu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  flex: 1;               /* le contenu remplit la carte : les liens restent alignés en bas */
+  padding: 1.5rem;
+}
+
+.carte h3 {
+  font-size: 1.4rem;
+}
+
+.carte p {
+  color: var(--texte-doux);
+}
+
+/* Pousse le dernier lien/bouton tout en bas de la carte */
+.carte-contenu > :last-child {
+  margin-top: auto;
+}
+
+/* Étiquette (« Modulaire », « Complet »…) */
+.etiquette {
+  align-self: flex-start;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  background-color: rgba(156, 90, 42, 0.12);
+  color: var(--bois-fonce);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.etiquette--complet {
+  background-color: rgba(31, 43, 40, 0.1);
+  color: var(--sapin);
+}
+
+/* Lien qui entoure toute une carte (aperçu des réalisations) */
+.carte-lien {
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.carte-lien:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(42, 38, 34, 0.14);
+}
+
+/* Lien centré sous une grille */
+.section-pied {
+  margin-top: 2.5rem;
+  text-align: center;
+}
+
+
+/* ==========================================================================
+   9. ÉTAPES « COMMENT ÇA SE PASSE »
+   Le numéro est généré automatiquement par CSS (compteur).
+   ========================================================================== */
+.etapes {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  padding: 0;
+  list-style: none;
+  counter-reset: etape;            /* on démarre un compteur nommé "etape" */
+}
+
+.etapes li {
+  counter-increment: etape;        /* +1 à chaque élément de liste */
+  padding: 1.5rem;
+  background-color: var(--creme);
+  border: 1px solid var(--ligne);
+  border-radius: var(--arrondi);
+}
+
+.etapes li::before {
+  content: counter(etape, decimal-leading-zero); /* affiche 01, 02, 03… */
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: var(--police-titre);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--bois-clair);
+}
+
+.etapes h3 {
+  margin-bottom: 0.4rem;
+  font-size: 1.2rem;
+}
+
+.etapes p {
+  color: var(--texte-doux);
+}
+
+
+/* ==========================================================================
+   10. SECTION ATELIER (image + texte côte à côte sur grand écran)
+   ========================================================================== */
+.duo {
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.duo img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--arrondi);
+  box-shadow: var(--ombre);
+}
+
+.duo h2 {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  margin-bottom: 1rem;
+}
+
+.duo p + p {
+  margin-top: 1rem;
+}
+
+.duo p {
+  color: var(--texte-doux);
+}
+
+
+/* ==========================================================================
+   11. EN-TÊTE DES PAGES INTÉRIEURES (Packs, Réalisations, Contact)
+   Pas de photo ici : un fond sombre avec un léger veinage bois en CSS.
+   ========================================================================== */
+.page-entete {
+  padding-block: 3.5rem 3rem;
+  color: var(--blanc);
+  background-color: var(--sapin);
+  background-image:
+    repeating-linear-gradient(
+      172deg,
+      rgba(255, 255, 255, 0.025) 0 2px,
+      transparent 2px 14px
+    ),
+    radial-gradient(circle at 85% 20%, rgba(201, 138, 82, 0.35), transparent 55%);
+}
+
+.page-entete h1 {
+  margin-bottom: 0.8rem;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  color: var(--blanc);
+}
+
+.page-entete p {
+  max-width: 640px;
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.page-entete .surtitre {
+  color: var(--soleil);
+}
+
+
+/* ==========================================================================
+   12. PACKS
+   ========================================================================== */
+.pack ul {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0;
+  list-style: none;
+  color: var(--texte);
+}
+
+/* Petite coche devant chaque élément de la liste */
+.pack li {
+  position: relative;
+  padding-left: 1.6rem;
+}
+
+.pack li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--bois);
+  font-weight: 700;
+}
+
+/* Zone du prix */
+.prix {
+  padding-top: 1rem;
+  border-top: 1px dashed var(--ligne);
+  color: var(--texte-doux);
+}
+
+.prix strong {
+  display: block;
+  font-family: var(--police-titre);
+  font-size: 1.8rem;
+  color: var(--sapin);
+}
+
+/* Encadré d'information (ex. note sur la VASP) */
+.note {
+  padding: 0.8rem 1rem;
+  border-left: 3px solid var(--soleil);
+  background-color: rgba(227, 163, 59, 0.1);
+  border-radius: 0 var(--arrondi-petit) var(--arrondi-petit) 0;
+  font-size: 0.95rem;
+}
+
+/* Liste des autres prestations à la carte (pastilles) */
+.pastilles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding: 0;
+  list-style: none;
+}
+
+.pastilles li {
+  padding: 0.5rem 1rem;
+  background-color: var(--creme);
+  border: 1px solid var(--ligne);
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+
+/* ==========================================================================
+   13. RÉALISATIONS : FILTRES ET COMPARATEUR AVANT / APRÈS
+   ========================================================================== */
+.filtres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+}
+
+.filtre {
+  min-height: 44px;
+  padding: 0.5rem 1.1rem;
+  border: 2px solid var(--ligne);
+  border-radius: 999px;
+  background-color: var(--creme);
+  color: var(--texte);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Filtre actif : aria-pressed="true" est géré par le JavaScript */
+.filtre[aria-pressed="true"] {
+  background-color: var(--sapin);
+  border-color: var(--sapin);
+  color: var(--blanc);
+}
+
+/* Le comparateur : 2 photos superposées.
+   La photo « après » est rognée à gauche selon la variable --position,
+   que le JavaScript met à jour quand on déplace le curseur. */
+.avant-apres {
+  --position: 50%;
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  user-select: none;
+}
+
+.avant-apres img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: auto;
+}
+
+.avant-apres .img-apres {
+  clip-path: inset(0 0 0 var(--position)); /* cache la partie gauche de la photo « après » */
+}
+
+/* Trait vertical + poignée ronde, placés à --position */
+.avant-apres-ligne {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--position);
+  width: 3px;
+  margin-left: -1.5px;
+  background-color: var(--blanc);
+  pointer-events: none;   /* ne bloque pas le curseur situé dessous */
+}
+
+.avant-apres-ligne::after {
+  content: "⇆";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background-color: var(--blanc);
+  color: var(--bois);
+  font-size: 1.3rem;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+/* Étiquettes « Avant » / « Après » dans les coins */
+.avant-apres-label {
+  position: absolute;
+  bottom: 0.8rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  background-color: rgba(20, 28, 26, 0.75);
+  color: var(--blanc);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  pointer-events: none;
+}
+
+.avant-apres-label--avant { left: 0.8rem; }
+.avant-apres-label--apres { right: 0.8rem; }
+
+/* Le vrai curseur (input type="range") est invisible mais couvre toute
+   la photo : on peut donc glisser n'importe où, au doigt ou à la souris,
+   et aussi utiliser les flèches du clavier. */
+.avant-apres input[type="range"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+
+  /* Sur téléphone : un glissement VERTICAL du doigt fait défiler la page
+     (au lieu de bouger le curseur). Seul un glissement horizontal
+     déplace le curseur avant/après. */
+  touch-action: pan-y;
+}
+
+/* Contour visible quand le curseur a le focus clavier */
+.avant-apres:focus-within {
+  outline: 3px solid var(--soleil);
+  outline-offset: -3px;
+}
+
+
+/* ==========================================================================
+   14. FORMULAIRE DE CONTACT
+   ========================================================================== */
+.contact-grille {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.formulaire {
+  display: grid;
+  gap: 1.3rem;
+  padding: 1.5rem;
+  background-color: var(--creme);
+  border: 1px solid var(--ligne);
+  border-radius: var(--arrondi);
+  box-shadow: var(--ombre);
+}
+
+/* Deux champs côte à côte sur grand écran (voir section 17) */
+.champs-duo {
+  display: grid;
+  gap: 1.3rem;
+}
+
+.champ {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.champ label,
+.champ legend {
+  font-weight: 700;
+  color: var(--sapin);
+}
+
+/* Mention « facultatif » à côté d'un libellé */
+.facultatif {
+  font-weight: 400;
+  color: var(--texte-doux);
+  font-size: 0.9rem;
+}
+
+.aide {
+  font-size: 0.9rem;
+  color: var(--texte-doux);
+}
+
+/* Style commun des zones de saisie */
+.champ input,
+.champ select,
+.champ textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.7rem 0.9rem;
+  border: 1.5px solid #cfc2ae;
+  border-radius: var(--arrondi-petit);
+  background-color: var(--blanc);
+  color: var(--texte);
+  font-family: inherit;
+  font-size: 1rem;   /* 16 px minimum : évite le zoom automatique sur iPhone */
+}
+
+.champ textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.champ input:focus,
+.champ select:focus,
+.champ textarea:focus {
+  border-color: var(--bois);
+  outline: 3px solid rgba(156, 90, 42, 0.2);
+  outline-offset: 0;
+}
+
+/* Groupe de cases à cocher (prestations) */
+fieldset.champ {
+  padding: 0;
+  border: 0;
+}
+
+.cases {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+}
+
+.case {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 48px;
+  padding: 0.5rem 0.8rem;
+  border: 1.5px solid var(--ligne);
+  border-radius: var(--arrondi-petit);
+  background-color: var(--blanc);
+  cursor: pointer;
+}
+
+/* La case cochée met en valeur son cadre (:has = « qui contient ») */
+.case:has(input:checked) {
+  border-color: var(--bois);
+  background-color: rgba(156, 90, 42, 0.07);
+}
+
+.case input {
+  width: 20px;
+  height: 20px;
+  min-height: 0;
+  accent-color: var(--bois);  /* couleur de la coche */
+  flex-shrink: 0;
+}
+
+.consentement {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  font-size: 0.95rem;
+  color: var(--texte-doux);
+}
+
+.consentement input {
+  width: 20px;
+  height: 20px;
+  margin-top: 0.2rem;
+  accent-color: var(--bois);
+  flex-shrink: 0;
+}
+
+/* ---------- Erreurs du formulaire (gérées par js/main.js, section 6) ---------- */
+
+/* Champ mal rempli : le JavaScript lui ajoute aria-invalid="true".
+   Le cadre devient rouge ET un message s'affiche dessous : la couleur
+   n'est jamais la seule indication (important pour les daltoniens). */
+.champ [aria-invalid="true"],
+.champ [aria-invalid="true"]:focus {   /* reste rouge même quand on clique dedans */
+  border-color: var(--erreur);
+  border-width: 2px;
+}
+
+.consentement:has([aria-invalid="true"]) {
+  color: var(--erreur);
+}
+
+/* Message sous le champ */
+.erreur-champ {
+  color: var(--erreur);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* Récapitulatif en haut du formulaire */
+.erreurs-resume {
+  padding: 1rem 1.2rem;
+  border: 2px solid var(--erreur);
+  border-radius: var(--arrondi-petit);
+  background-color: var(--erreur-fond);
+}
+
+.erreurs-resume h3 {
+  margin-bottom: 0.3rem;
+  font-size: 1.15rem;
+  color: var(--erreur);
+}
+
+.erreurs-resume ul {
+  margin-top: 0.5rem;
+}
+
+.erreurs-resume a {
+  color: var(--erreur);
+  font-weight: 600;
+}
+
+/* Message affiché après l'envoi (par le JavaScript) */
+.message-envoi {
+  padding: 1rem 1.2rem;
+  border-radius: var(--arrondi-petit);
+  background-color: rgba(52, 70, 63, 0.1);
+  border-left: 4px solid var(--sapin-clair);
+  color: var(--sapin);
+}
+
+/* Colonne d'informations à côté du formulaire */
+.infos {
+  display: grid;
+  gap: 1.5rem;
+  align-content: start;
+}
+
+.infos-bloc {
+  padding: 1.5rem;
+  background-color: var(--sapin);
+  color: rgba(255, 255, 255, 0.88);
+  border-radius: var(--arrondi);
+}
+
+.infos-bloc h2 {
+  margin-bottom: 0.8rem;
+  font-size: 1.3rem;
+  color: var(--soleil);
+}
+
+.infos-bloc a {
+  color: var(--blanc);
+  font-weight: 700;
+}
+
+.infos-bloc ul {
+  display: grid;
+  gap: 0.4rem;
+}
+
+
+/* ==========================================================================
+   15. BANDEAU D'APPEL À L'ACTION (fin de page)
+   ========================================================================== */
+.appel {
+  padding-block: 4rem;
+  text-align: center;
+  color: var(--blanc);
+  background:
+    linear-gradient(135deg, rgba(122, 67, 28, 0.95), rgba(31, 43, 40, 0.95));
+}
+
+.appel h2 {
+  margin-bottom: 0.8rem;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  color: var(--blanc);
+}
+
+.appel p {
+  max-width: 560px;
+  margin: 0 auto 1.8rem;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 1.1rem;
+}
+
+.appel .boutons {
+  justify-content: center;
+}
+
+/* Sur fond brun, le bouton principal passe en ocre pour ressortir */
+.appel .bouton:not(.bouton--clair) {
+  background-color: var(--soleil);
+  border-color: var(--soleil);
+  color: var(--sapin);
+}
+
+.appel .bouton:not(.bouton--clair):hover {
+  background-color: var(--blanc);
+  border-color: var(--blanc);
+}
+
+
+/* ==========================================================================
+   16. PIED DE PAGE
+   ========================================================================== */
+.pied {
+  padding-block: 3rem 1.5rem;
+  background-color: var(--sapin);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.95rem;
+}
+
+.pied-grille {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  margin-bottom: 2rem;
+}
+
+.pied h2 {
+  margin-bottom: 0.7rem;
+  font-family: var(--police-texte);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--soleil);
+}
+
+.pied ul {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0;
+  list-style: none;
+}
+
+.pied a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+}
+
+.pied a:hover {
+  color: var(--blanc);
+  text-decoration: underline;
+}
+
+.pied .logo {
+  margin-bottom: 0.8rem;
+}
+
+.pied-bas {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--sapin-clair);
+  font-size: 0.85rem;
+}
+
+
+/* ==========================================================================
+   17. ADAPTATIONS POUR LES GRANDS ÉCRANS
+   Ces règles ne s'appliquent qu'à partir d'une certaine largeur d'écran.
+   ========================================================================== */
+
+/* À partir de 700 px (grande tablette) */
+@media (min-width: 700px) {
+  .section {
+    padding-block: 5.5rem;
+  }
+
+  .champs-duo {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .formulaire {
+    padding: 2rem;
+  }
+}
+
+/* À partir de 960 px (ordinateur) : menu horizontal toujours visible */
+@media (min-width: 960px) {
+  .menu-bouton {
+    display: none;   /* plus besoin du burger */
+  }
+
+  .bouton-appel {
+    display: none;   /* sur ordinateur, le numéro est dans le pied de page et la page Contact */
+  }
+
+  .menu {
+    display: block;
+    position: static;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+
+  .menu ul {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .menu a:not(.bouton) {
+    padding: 0.5rem 0.8rem;
+  }
+
+  .menu .bouton {
+    width: auto;
+    margin: 0 0 0 0.5rem;
+  }
+
+  .hero {
+    padding-block: 8rem 5rem;
+  }
+
+  .duo {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  /* Formulaire large à gauche, infos à droite */
+  .contact-grille {
+    grid-template-columns: 1.7fr 1fr;
+  }
+
+  .infos {
+    position: sticky;
+    top: 90px;
+  }
+}
+
+/* Respecte le réglage « réduire les animations » de l'utilisateur */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; }
+}

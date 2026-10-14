@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  VAN HARMONIE — PAGE PACKS (packs.html)
+  ----------------------------------------------------------------------------
+  Présente les 4 packs sous forme de cartes, puis les autres prestations
+  possibles à la carte.
+
+  ✏️ PRIX À COMPLÉTER : cherchez "[prix]" dans ce fichier (Ctrl + F) et
+     remplacez-le par votre montant. Précisez si besoin "HT" ou "TTC".
+  ============================================================================
+-->
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nos packs — Van Harmonie, aménagement de vans</title>
+  <meta name="description" content="Packs Énergie Victron, Isolation & Ouvertures, Gaz & Chauffage et Accompagnement VASP : des prestations modulaires pour votre van ou fourgon.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <a class="lien-evitement" href="#contenu">Aller au contenu</a>
+
+  <!-- ========== EN-TÊTE (identique sur les 4 pages, sauf aria-current) ========== -->
+  <header class="entete">
+    <div class="conteneur entete-interieur">
+      <a href="index.html" class="logo">
+        <span class="logo-pastille" aria-hidden="true">VH</span>
+        <span class="logo-texte">Van Harmonie <small>Atelier d'aménagement</small></span>
+      </a>
+
+      <!-- Bouton « Appeler » : visible sur mobile et tablette (caché sur ordinateur,
+           voir css/style.css section 5). Un toucher lance l'appel.
+           L'icône de téléphone est un petit dessin SVG (icône « phone » de Lucide). -->
+      <a href="tel:+33625000281" class="bouton-appel">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        <span class="bouton-appel-texte">Appeler</span>
+      </a>
+
+      <button class="menu-bouton" type="button" aria-expanded="false" aria-controls="menu-principal">
+        <span class="menu-barres"></span>
+        <span class="visuellement-cache">Ouvrir le menu</span>
+      </button>
+
+      <nav id="menu-principal" class="menu" aria-label="Menu principal">
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="packs.html" aria-current="page">Packs</a></li>
+          <li><a href="realisations.html">Réalisations</a></li>
+          <li><a href="contact.html" class="bouton bouton--petit">Demande de devis</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+
+  <main id="contenu">
+
+    <!-- ===================== EN-TÊTE DE PAGE ===================== -->
+    <section class="page-entete">
+      <div class="conteneur">
+        <span class="surtitre">Prestations modulaires</span>
+        <h1>Nos packs</h1>
+        <p>
+          Chaque pack peut être réalisé seul, sur un van déjà aménagé, ou
+          combiné à d'autres dans le cadre d'un projet complet.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- ======================================================================
+         LES 4 PACKS
+         Chaque pack a un "id" (energie, isolation, gaz, vasp) : on peut ainsi
+         créer un lien direct vers lui, ex. packs.html#vasp.
+
+         Le bouton « Demander un devis » mène à contact.html?pack=energie :
+         le JavaScript coche alors automatiquement la bonne case du formulaire.
+         ====================================================================== -->
+    <section class="section">
+      <div class="conteneur">
+        <!-- Titre lu par les lecteurs d'écran uniquement (bonne structure des titres) -->
+        <h2 class="visuellement-cache">Les 4 packs</h2>
+        <!-- "grille--2" : 2 cartes par ligne (voir css/style.css section 3) -->
+        <div class="grille grille--2">
+
+          <!-- ---------- PACK 1 : ÉNERGIE VICTRON ---------- -->
+          <article class="carte pack" id="energie">
+            <img src="images/pack-energie.jpg" alt="Installation électrique Victron dans un van" loading="lazy">
+            <div class="carte-contenu">
+              <h3>Énergie Victron</h3>
+              <p>
+                Une installation électrique autonome pour vivre à bord
+                sans se soucier du courant, dimensionnée selon vos usages.
+              </p>
+              <ul>
+                <li>Batterie lithium</li>
+                <li>Chargeur batterie-batterie (booster DC-DC)</li>
+                <li>Panneau(x) solaire(s) et régulateur</li>
+                <li>Convertisseur 230&nbsp;V</li>
+                <li>Suivi de la consommation</li>
+              </ul>
+              <!-- ✏️ PRIX À COMPLÉTER -->
+              <p class="prix">À partir de <strong>1&nbsp;500&nbsp;€</strong></p>
+              <a href="contact.html?pack=energie" class="bouton">Demander un devis</a>
+            </div>
+          </article>
+
+          <!-- ---------- PACK 2 : ISOLATION & OUVERTURES ---------- -->
+          <article class="carte pack" id="isolation">
+            <img src="images/pack-isolation.jpg" alt="Découpe de la carrosserie pour la pose d'une fenêtre sur un fourgon" loading="lazy">
+            <div class="carte-contenu">
+              <h3>Isolation &amp; Ouvertures</h3>
+              <p>
+                Un van plus confortable été comme hiver, plus lumineux et
+                mieux ventilé.
+              </p>
+              <ul>
+                <li>Isolation des parois, du plafond et du plancher</li>
+                <li>Pose de fenêtres</li>
+                <li>Lanterneau et aérateur de toit</li>
+                <li>Découpes préparées et protégées</li>
+              </ul>
+              <!-- ✏️ PRIX À COMPLÉTER -->
+              <p class="prix">À partir de <strong>1&nbsp;200&nbsp;€</strong></p>
+              <a href="contact.html?pack=isolation" class="bouton">Demander un devis</a>
+            </div>
+          </article>
+
+          <!-- ---------- PACK 3 : GAZ & CHAUFFAGE ---------- -->
+          <article class="carte pack" id="gaz">
+            <img src="images/pack-gaz.jpg" alt="Chauffage stationnaire installé dans un van" loading="lazy">
+            <div class="carte-contenu">
+              <h3>Gaz &amp; Chauffage</h3>
+              <p>
+                Cuisiner et rester au chaud à bord, quelle que soit la
+                saison.
+              </p>
+              <ul>
+                <li>Installation gaz (bouteille, détendeur, réseau)</li>
+                <li>Raccordement des appareils de cuisson</li>
+                <li>Chauffage stationnaire (gazole ou gaz)</li>
+                <li>Ventilations adaptées</li>
+              </ul>
+              <!-- ✏️ PRIX À COMPLÉTER -->
+              <p class="prix">À partir de <strong>1&nbsp;500&nbsp;€</strong></p>
+              <a href="contact.html?pack=gaz" class="bouton">Demander un devis</a>
+            </div>
+          </article>
+
+          <!-- ---------- PACK 4 : ACCOMPAGNEMENT VASP ---------- -->
+          <article class="carte pack" id="vasp">
+            <img src="images/pack-vasp.jpg" alt="Fourgon aménagé en autocaravane" loading="lazy">
+            <div class="carte-contenu">
+              <h3>Accompagnement VASP</h3>
+              <p>
+                Un accompagnement pour préparer le passage de votre
+                véhicule en VASP autocaravane.
+              </p>
+              <ul>
+                <li>Point sur les éléments requis</li>
+                <li>Conseils sur les aménagements nécessaires</li>
+                <li>Aide à la constitution du dossier</li>
+                <li>Préparation du contrôle</li>
+              </ul>
+              <!-- Mention honnête : l'atelier accompagne, mais ne décide pas -->
+              <p class="note">
+                La décision d'homologation appartient aux organismes
+                compétents.
+              </p>
+              <!-- ✏️ PRIX À COMPLÉTER -->
+              <p class="prix">À partir de <strong>1&nbsp;200&nbsp;€</strong></p>
+              <a href="contact.html?pack=vasp" class="bouton">Demander un devis</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================================================================
+         AUTRES PRESTATIONS À LA CARTE
+         ✏️ Ajoutez ou retirez des <li> selon ce que vous proposez.
+         ====================================================================== -->
+    <section class="section section--creme">
+      <div class="conteneur">
+        <div class="section-entete">
+          <span class="surtitre">À la carte</span>
+          <div class="planche"></div>
+          <h2>Et aussi…</h2>
+          <p>
+            Votre besoin ne rentre pas dans un pack&nbsp;? Nous réalisons
+            aussi des prestations à l'unité&nbsp;:
+          </p>
+        </div>
+
+        <ul class="pastilles">
+          <li>Mobilier et menuiserie bois</li>
+          <li>Circuit d'eau (évier, réservoirs, douche)</li>
+          <li>Éclairage et prises</li>
+          <li>Couchage et banquette</li>
+          <li>Rangements</li>
+          <li>Habillage intérieur</li>
+        </ul>
+
+        <div class="section-pied">
+          <a href="contact.html" class="bouton bouton--contour">Décrire mon besoin</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===================== APPEL À L'ACTION ===================== -->
+    <section class="appel">
+      <div class="conteneur">
+        <h2>Envie d'un aménagement complet&nbsp;?</h2>
+        <p>
+          Les packs se combinent librement. Pour un projet de A à Z,
+          parlons-en ensemble.
+        </p>
+        <div class="boutons">
+          <a href="contact.html?pack=complet" class="bouton">Demande de devis</a>
+          <a href="realisations.html" class="bouton bouton--clair">Voir nos réalisations</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ========== PIED DE PAGE (identique sur les 4 pages) ========== -->
+  <footer class="pied">
+    <div class="conteneur">
+      <div class="pied-grille">
+        <div>
+          <a href="index.html" class="logo">
+            <span class="logo-pastille" aria-hidden="true">VH</span>
+            <span class="logo-texte">Van Harmonie <small>Atelier d'aménagement</small></span>
+          </a>
+          <p>Aménagement de vans et fourgons, prestations modulaires et sur-mesure.</p>
+        </div>
+
+        <div>
+          <h2>L'atelier</h2>
+          <ul>
+            <li>Pélissanne (13330)</li>
+            <li>Près de Salon-de-Provence</li>
+            <li>Interventions en PACA et partout en France</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2>Contact</h2>
+          <ul>
+            <li><a href="tel:+33625000281">06 25 00 02 81</a></li>
+            <li><a href="mailto:van.harmonie13@gmail.com">van.harmonie13@gmail.com</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2>Navigation</h2>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="packs.html">Packs</a></li>
+            <li><a href="realisations.html">Réalisations</a></li>
+            <li><a href="contact.html">Demande de devis</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="pied-bas">© <span class="annee">2026</span> Van Harmonie — Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+
+  <!-- Bibliothèque d'animation Motion (motion.dev), version 13.4.6, chargée
+       depuis le CDN jsDelivr. "defer" = téléchargée sans bloquer l'affichage,
+       puis exécutée dans l'ordre, une fois la page lue.
+       "integrity" = empreinte du fichier : si le fichier reçu était modifié,
+       le navigateur refuserait de l'exécuter (sécurité). Si vous changez de
+       version, il faut changer l'empreinte aussi (ou retirer cet attribut). -->
+  <script defer src="https://cdn.jsdelivr.net/npm/motion@13.4.6/dist/motion.js"
+          integrity="sha384-r/e4U+dyOcWBX2/DXrTeaB1R9i9FhnrrxlcxehiAjy3Z1fa8134rTLsgfThF9tYQ"
+          crossorigin="anonymous"></script>
+  <!-- Nos animations (doit venir APRÈS Motion, car il l'utilise) -->
+  <script defer src="js/animations.js"></script>
+</body>
+</html>

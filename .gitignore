@@ -1,0 +1,27 @@
+# ============================================================================
+# .gitignore — liste des fichiers et dossiers que Git doit IGNORER
+# ----------------------------------------------------------------------------
+# Tout ce qui est écrit ici ne sera jamais enregistré dans l'historique
+# ni envoyé sur GitHub. Une ligne = un fichier ou un dossier.
+# Le « / » à la fin d'un nom veut dire « ce dossier et tout son contenu ».
+# Les lignes qui commencent par « # » sont des commentaires.
+# ============================================================================
+
+# Outils de Claude (skills UI UX Pro Max, réglage du serveur de test) :
+# utiles sur votre ordinateur, mais ils ne font pas partie du site.
+.claude/
+
+# Vos photos originales en pleine taille : très lourdes, et les photos de
+# téléphone peuvent contenir des informations cachées (date, modèle du
+# téléphone, parfois le lieu GPS où elles ont été prises).
+# Le site utilise uniquement les versions réduites du dossier images/.
+photos-originales/
+
+# Fichiers créés automatiquement par Windows et macOS (miniatures, réglages
+# d'affichage des dossiers) : inutiles et sans rapport avec le site.
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Fichiers temporaires
+*.tmp
