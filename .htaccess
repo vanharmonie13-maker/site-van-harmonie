@@ -1,0 +1,21 @@
+# ============================================================================
+# .htaccess — réglages du serveur web (o2switch / Apache)
+# ----------------------------------------------------------------------------
+# Ce fichier est lu par le serveur d'o2switch, pas par les visiteurs.
+# Il doit être placé à la racine du site (dans le dossier public_html).
+# Les lignes qui commencent par « # » sont des commentaires.
+# ============================================================================
+
+# 1. Toujours utiliser la connexion sécurisée (https://, le cadenas).
+#    Si quelqu'un tape http://, il est redirigé vers https://.
+#    (Le certificat de sécurité est fourni gratuitement par o2switch.)
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# 2. La page d'accueil du site est index.html.
+DirectoryIndex index.html
+
+# 3. Ne jamais afficher la liste des fichiers d'un dossier
+#    (par exemple si quelqu'un tape votresite.fr/images/).
+Options -Indexes

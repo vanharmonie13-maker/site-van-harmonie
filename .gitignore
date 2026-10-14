@@ -25,3 +25,6 @@ desktop.ini
 
 # Fichiers temporaires
 *.tmp
+
+# Fichier ZIP préparé pour l'envoi sur o2switch (se recrée à la demande)
+*.zip
