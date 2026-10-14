@@ -9,6 +9,7 @@
      4. Filtres des réalisations (page Réalisations)
      5. Pré-cocher un pack dans le formulaire (page Contact)
      6. Formulaire de devis : vérification des champs + message (page Contact)
+     7. Arriver en haut de la page après un clic sur un lien
 
    Chaque partie vérifie d'abord que les éléments existent sur la page :
    si on n'est pas sur la bonne page, elle ne fait simplement rien.
@@ -329,3 +330,39 @@ if (formulaire && messageEnvoi && resumeErreurs && listeErreurs) {
     messageEnvoi.scrollIntoView({ behavior: "smooth", block: "center" });
   });
 }
+
+
+/* --------------------------------------------------------------------------
+   7. ARRIVER EN HAUT DE LA PAGE APRÈS UN CLIC SUR UN LIEN
+   Normalement, un navigateur ouvre toujours une nouvelle page tout en haut.
+   Mais quand le site est affiché dans un cadre (par exemple un Artifact
+   dans l'application Claude sur téléphone), ce cadre peut réappliquer
+   l'ancienne position de défilement : on arrivait alors en bas de la page.
+   Ici, on remet la page en haut nous-mêmes.
+
+   On ne le fait PAS dans 3 cas, où garder la position est voulu :
+     - le lien vise un endroit précis de la page (ex. packs.html#vasp) ;
+     - on revient avec le bouton « Retour » du navigateur ;
+     - on recharge la page.
+   -------------------------------------------------------------------------- */
+(function () {
+  // Comment est-on arrivé sur cette page ? Le navigateur le sait :
+  //   "navigate"     = en cliquant sur un lien (ou en tapant l'adresse)
+  //   "back_forward" = avec les boutons Retour / Suivant
+  //   "reload"       = en rechargeant la page
+  const navigation = performance.getEntriesByType("navigation")[0];
+  const arriveeParUnLien = !navigation || navigation.type === "navigate";
+
+  if (!arriveeParUnLien || window.location.hash) return;
+
+  function remonterEnHaut() {
+    window.scrollTo(0, 0);
+  }
+
+  // Tout de suite, puis encore une fois quand tout est chargé (images
+  // comprises), au cas où l'ancienne position serait réappliquée entre-temps.
+  remonterEnHaut();
+  window.addEventListener("load", function () {
+    requestAnimationFrame(remonterEnHaut);
+  });
+})();
