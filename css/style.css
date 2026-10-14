@@ -2,7 +2,7 @@
    VAN HARMONIE — Feuille de style principale
    --------------------------------------------------------------------------
    Ce fichier gère TOUTE l'apparence du site (couleurs, tailles, mise en page).
-   Les 4 pages HTML l'utilisent grâce à la ligne :
+   Toutes les pages HTML l'utilisent grâce à la ligne :
    <link rel="stylesheet" href="css/style.css">
 
    Le fichier est découpé en sections numérotées :
@@ -1224,6 +1224,43 @@ fieldset.champ {
 }
 
 
+/* ---------- Page « Mentions légales et confidentialité » ---------- */
+
+/* Texte long : largeur limitée pour une lecture confortable (≈ 70 caractères) */
+.texte-legal {
+  max-width: 760px;
+}
+
+.texte-legal h2 {
+  margin-top: 2.2rem;
+  margin-bottom: 0.6rem;
+  font-size: 1.4rem;
+}
+
+.texte-legal h2:first-child {
+  margin-top: 0;
+}
+
+.texte-legal p,
+.texte-legal ul {
+  margin-bottom: 0.8rem;
+}
+
+.texte-legal li + li {
+  margin-top: 0.3rem;
+}
+
+/* Passages encore à compléter : surlignés en jaune pour les repérer.
+   ✏️ Retirez la classe "a-completer" une fois l'information écrite. */
+.a-completer {
+  padding: 0.05rem 0.3rem;
+  background-color: #fff1a8;
+  color: #4a3b00;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+
 /* ==========================================================================
    15. BANDEAU D'APPEL À L'ACTION (fin de page)
    ========================================================================== */
@@ -1316,6 +1353,11 @@ fieldset.champ {
   padding-top: 1.5rem;
   border-top: 1px solid var(--sapin-clair);
   font-size: 0.85rem;
+}
+
+/* Lien « Mentions légales » : souligné pour qu'on voie que c'est un lien */
+.pied-bas a {
+  text-decoration: underline;
 }
 
 

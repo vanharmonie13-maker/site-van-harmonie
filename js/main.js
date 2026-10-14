@@ -1,7 +1,7 @@
 /* ==========================================================================
    VAN HARMONIE — Script principal
    --------------------------------------------------------------------------
-   Ce fichier est chargé par les 4 pages (balise <script> en bas du HTML).
+   Ce fichier est chargé par toutes les pages (balise <script> en bas du HTML).
    Il ajoute un peu d'interactivité :
      1. Ouvrir / fermer le menu sur mobile
      2. Afficher l'année en cours dans le pied de page
@@ -176,7 +176,7 @@ const MESSAGES = {
   },
   consentement: {
     libelle: "Consentement",
-    vide: "Cochez cette case pour que nous puissions vous recontacter."
+    vide: "Cochez cette case pour que je puisse vous recontacter."
   }
 };
 
