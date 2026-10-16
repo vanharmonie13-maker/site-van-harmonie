@@ -514,7 +514,8 @@ ul {
 }
 
 /* Page en cours : aria-current="page" est écrit dans le HTML de chaque page */
-.menu a:not(.bouton)[aria-current="page"] {
+/* "page" = page en cours ; "true" = rubrique en cours (ex. une page projet) */
+.menu a:not(.bouton)[aria-current] {
   color: var(--soleil);
 }
 
@@ -1021,6 +1022,135 @@ ul {
 .avant-apres:focus-within {
   outline: 3px solid var(--soleil);
   outline-offset: -3px;
+}
+
+
+/* ---------- Pages projet (projet-boxer.html, projet-t6.html) ---------- */
+
+/* Lien « ← Toutes les réalisations » au-dessus du titre */
+.retour {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.retour:hover {
+  color: var(--soleil);
+}
+
+/* Fiche résumée du projet : véhicule, dates, état, travaux */
+.fiche-projet {
+  display: grid;
+  gap: 1rem 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+  background-color: var(--creme);
+  border: 1px solid var(--ligne);
+  border-radius: var(--arrondi);
+}
+
+.fiche-projet dt {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bois);
+}
+
+.fiche-projet dd {
+  margin: 0.2rem 0 0;
+  font-weight: 600;
+  color: var(--sapin);
+}
+
+/* Le comparateur avant/après, seul et plus grand sur une page projet */
+.avant-apres--grand {
+  max-width: 900px;
+  border-radius: var(--arrondi);
+  box-shadow: var(--ombre);
+}
+
+/* Étapes du chantier : une photo + un texte par étape, numérotées
+   automatiquement par le CSS (comme les étapes de l'accueil) */
+.chantier {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));   /* 3 par ligne sur ordinateur */
+  padding: 0;
+  list-style: none;
+  counter-reset: etape-chantier;
+}
+
+.chantier li {
+  counter-increment: etape-chantier;
+}
+
+.chantier img {
+  width: 100%;
+  aspect-ratio: 3 / 4;          /* photos verticales : même format pour toutes */
+  object-fit: cover;
+  border-radius: var(--arrondi);
+  box-shadow: var(--ombre);
+}
+
+.chantier h3 {
+  margin-top: 0.9rem;
+  font-size: 1.2rem;
+}
+
+.chantier h3::before {
+  content: counter(etape-chantier) ". ";
+  color: var(--bois-clair);
+}
+
+.chantier .date {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--bois);
+}
+
+.chantier p {
+  margin-top: 0.4rem;
+  color: var(--texte-doux);
+}
+
+/* Galerie de photos : grille automatique, photos au même format */
+.galerie {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));   /* 3 par ligne sur ordinateur */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.galerie figure {
+  margin: 0;
+}
+
+.galerie img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--arrondi);
+}
+
+.galerie figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--texte-doux);
+}
+
+/* Lien « Voir le projet » sous une carte de réalisation */
+.carte-contenu .lien-fleche {
+  margin-top: auto;
 }
 
 

@@ -23,7 +23,7 @@ deployment:
     # Sécurité : on s'arrête si ce dossier n'existe pas.
     - test -d "$DEPLOYPATH"
     # Les pages
-    - /bin/cp index.html packs.html realisations.html contact.html mentions-legales.html "$DEPLOYPATH"
+    - /bin/cp index.html packs.html realisations.html contact.html mentions-legales.html projet-boxer.html projet-t6.html "$DEPLOYPATH"
     # Réglages du serveur et icônes d'onglet
     - /bin/cp .htaccess favicon.ico favicon.svg apple-touch-icon.png "$DEPLOYPATH"
     # Les dossiers du style, des scripts et des images (avec leur contenu)

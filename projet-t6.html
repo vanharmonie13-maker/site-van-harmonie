@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  VAN HARMONIE — PAGE PROJET : VOLKSWAGEN T6 (projet-t6.html)
+  ----------------------------------------------------------------------------
+  Présente l'aménagement du Volkswagen T6 : fiche, avant/après et galerie.
+  ✏️ Les textes décrivent ce qu'on voit sur les photos : complétez-les.
+  ⚠️ Page à déclarer dans .cpanel.yml pour être mise en ligne (c'est fait).
+  ============================================================================
+-->
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Volkswagen T6 — Van Harmonie</title>
+  <meta name="description" content="Aménagement bois d'un Volkswagen T6 : plafond en lames, lit sur coffres, meuble cuisine avec évier et table rabattable.">
+  <!-- Icône d'onglet (favicon) : la pastille « VH ».
+       .svg pour les navigateurs récents, .ico pour les anciens,
+       apple-touch-icon pour l'écran d'accueil des téléphones. -->
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <a class="lien-evitement" href="#contenu">Aller au contenu</a>
+
+  <!-- ========== EN-TÊTE (identique sur toutes les pages, sauf aria-current) ========== -->
+  <header class="entete">
+    <div class="conteneur entete-interieur">
+      <a href="index.html" class="logo">
+        <span class="logo-pastille" aria-hidden="true">VH</span>
+        <span class="logo-texte">Van Harmonie <small>Atelier d'aménagement</small></span>
+      </a>
+
+      <!-- Bouton « Appeler » : visible sur mobile et tablette (caché sur ordinateur,
+           voir css/style.css section 5). Un toucher lance l'appel.
+           L'icône de téléphone est un petit dessin SVG (icône « phone » de Lucide). -->
+      <a href="tel:+33625000281" class="bouton-appel">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        <span class="bouton-appel-texte">Appeler</span>
+      </a>
+
+      <button class="menu-bouton" type="button" aria-expanded="false" aria-controls="menu-principal">
+        <span class="menu-barres"></span>
+        <span class="visuellement-cache">Ouvrir le menu</span>
+      </button>
+
+      <nav id="menu-principal" class="menu" aria-label="Menu principal">
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="packs.html">Packs</a></li>
+          <li><a href="realisations.html" aria-current="true">Réalisations</a></li>
+          <li><a href="contact.html" class="bouton bouton--petit">Demande de devis</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+
+  <main id="contenu">
+
+    <!-- ===================== EN-TÊTE DE PAGE ===================== -->
+    <section class="page-entete">
+      <div class="conteneur">
+        <a href="realisations.html" class="retour">← Toutes les réalisations</a>
+        <span class="surtitre">Réalisation terminée</span>
+        <h1>Volkswagen T6</h1>
+        <p>
+          Un van compact aménagé en bois&nbsp;: plafond en lames, lit sur
+          coffres de rangement, meuble cuisine avec évier et table rabattable.
+        </p>
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="conteneur">
+
+        <!-- ==================================================================
+             FICHE DU PROJET
+             ✏️ Complétez ou corrigez ces informations.
+             ================================================================== -->
+        <h2 class="visuellement-cache">Fiche du projet</h2>
+        <dl class="fiche-projet">
+          <div><dt>Véhicule</dt><dd>Volkswagen T6</dd></div>
+          <div><dt>Réalisation</dt><dd>Mai à juillet 2026</dd></div>
+          <div><dt>État</dt><dd>Terminé</dd></div>
+          <div><dt>Type de projet</dt><dd>Aménagement complet</dd></div>
+        </dl>
+
+        <!-- AVANT / APRÈS (même fonctionnement que sur la page Réalisations) -->
+        <div class="avant-apres avant-apres--grand">
+          <img src="images/t6-avant.jpg" alt="Avant : Volkswagen T6 vide, vu depuis les portes arrière">
+          <img class="img-apres" src="images/t6-apres.jpg" alt="Après : lit sur coffres et meubles terminés, vus depuis les portes arrière">
+          <span class="avant-apres-ligne" aria-hidden="true"></span>
+          <span class="avant-apres-label avant-apres-label--avant" aria-hidden="true">Avant</span>
+          <span class="avant-apres-label avant-apres-label--apres" aria-hidden="true">Après</span>
+          <input type="range" min="0" max="100" value="50" aria-label="Comparer avant et après : Volkswagen T6">
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===================== GALERIE =====================
+         ✏️ Pour ajouter une photo : copiez un bloc <li>…</li> entier. -->
+    <section class="section section--creme">
+      <div class="conteneur">
+        <div class="section-entete">
+          <span class="surtitre">En images</span>
+          <div class="planche"></div>
+          <h2>Le T6 terminé</h2>
+        </div>
+
+        <ul class="galerie">
+          <li>
+            <figure>
+              <img src="images/t6-plafond.jpg" alt="Plafond en lames de bois avec éclairage" loading="lazy">
+              <figcaption>Plafond en lames de bois et éclairage</figcaption>
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <img src="images/t6-cuisine.jpg" alt="Meuble cuisine avec évier" loading="lazy">
+              <figcaption>Le meuble cuisine et son évier</figcaption>
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <img src="images/t6-table.jpg" alt="Table rabattable en bois" loading="lazy">
+              <figcaption>La table rabattable</figcaption>
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <img src="images/t6-porte-laterale.jpg" alt="Intérieur vu par la porte latérale" loading="lazy">
+              <figcaption>Vue par la porte latérale</figcaption>
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <img src="images/t6-interieur.jpg" alt="Rangements et coin cuisine" loading="lazy">
+              <figcaption>Rangements et coin cuisine</figcaption>
+            </figure>
+          </li>
+          <li>
+            <figure>
+              <img src="images/t6-lit.jpg" alt="Le couchage vu depuis les portes arrière" loading="lazy">
+              <figcaption>Le couchage, vu depuis l'arrière</figcaption>
+            </figure>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- ===================== APPEL À L'ACTION ===================== -->
+    <section class="appel">
+      <div class="conteneur">
+        <h2>Un projet comme celui-ci&nbsp;?</h2>
+        <p>Aménagement complet ou une seule étape&nbsp;: parlons de votre fourgon.</p>
+        <div class="boutons">
+          <a href="contact.html?pack=complet" class="bouton">Demande de devis</a>
+          <a href="realisations.html" class="bouton bouton--clair">Voir les autres réalisations</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ========== PIED DE PAGE (identique sur toutes les pages) ========== -->
+  <footer class="pied">
+    <div class="conteneur">
+      <div class="pied-grille">
+        <div>
+          <a href="index.html" class="logo">
+            <span class="logo-pastille" aria-hidden="true">VH</span>
+            <span class="logo-texte">Van Harmonie <small>Atelier d'aménagement</small></span>
+          </a>
+          <p>Aménagement de vans et fourgons, prestations modulaires et sur-mesure.</p>
+        </div>
+
+        <div>
+          <h2>L'atelier</h2>
+          <ul>
+            <li>Pélissanne (13330)</li>
+            <li>Près de Salon-de-Provence</li>
+            <li>Déplacement possible si besoin</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2>Contact</h2>
+          <ul>
+            <li><a href="tel:+33625000281">06 25 00 02 81</a></li>
+            <li><a href="mailto:van.harmonie13@gmail.com">van.harmonie13@gmail.com</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2>Navigation</h2>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="packs.html">Packs</a></li>
+            <li><a href="realisations.html">Réalisations</a></li>
+            <li><a href="contact.html">Demande de devis</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="pied-bas">© <span class="annee">2026</span> Van Harmonie — Tous droits réservés
+        · <a href="mentions-legales.html">Mentions légales et confidentialité</a></p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+
+  <!-- Bibliothèque d'animation Motion (motion.dev), version 13.4.6, chargée
+       depuis le CDN jsDelivr. "defer" = téléchargée sans bloquer l'affichage,
+       puis exécutée dans l'ordre, une fois la page lue.
+       "integrity" = empreinte du fichier : si le fichier reçu était modifié,
+       le navigateur refuserait de l'exécuter (sécurité). Si vous changez de
+       version, il faut changer l'empreinte aussi (ou retirer cet attribut). -->
+  <script defer src="https://cdn.jsdelivr.net/npm/motion@13.4.6/dist/motion.js"
+          integrity="sha384-r/e4U+dyOcWBX2/DXrTeaB1R9i9FhnrrxlcxehiAjy3Z1fa8134rTLsgfThF9tYQ"
+          crossorigin="anonymous"></script>
+  <!-- Nos animations (doit venir APRÈS Motion, car il l'utilise) -->
+  <script defer src="js/animations.js"></script>
+</body>
+</html>
