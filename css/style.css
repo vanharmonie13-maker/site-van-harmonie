@@ -1409,6 +1409,44 @@ fieldset.champ {
   margin-top: 0.3rem;
 }
 
+/* ---------- Page « Conditions générales de vente » (cgv.html) ---------- */
+
+/* Date de version, juste sous l'en-tête */
+.version-cgv {
+  font-weight: 600;
+  color: var(--texte-doux);
+}
+
+/* Sommaire : un encadré avec la liste des articles, sur 2 colonnes
+   quand l'écran est assez large (une seule sur téléphone) */
+.sommaire {
+  margin: 1.5rem 0 2.5rem;
+  padding: 1.5rem;
+  background-color: var(--creme);
+  border: 1px solid var(--ligne);
+  border-radius: var(--arrondi);
+}
+
+.texte-legal .sommaire h2 {
+  margin-top: 0;
+  font-size: 1.2rem;
+}
+
+.sommaire ol {
+  columns: 2 260px;   /* 2 colonnes d'au moins 260 px, sinon 1 seule */
+  column-gap: 2rem;
+  margin-bottom: 0.8rem;
+}
+
+.sommaire li {
+  break-inside: avoid;   /* un titre d'article n'est jamais coupé entre 2 colonnes */
+}
+
+.sommaire p {
+  margin-bottom: 0;
+  font-weight: 600;
+}
+
 /* Passages encore à compléter : surlignés en jaune pour les repérer.
    ✏️ Retirez la classe "a-completer" une fois l'information écrite. */
 .a-completer {
